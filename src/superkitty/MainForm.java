@@ -17,19 +17,13 @@ import javax.swing.border.LineBorder;
  */
 public class MainForm extends javax.swing.JFrame {
 
-    private final int elementSize = 20;
-    private int fieldWidth; 
-    private int fieldHeight;
+    private final int elementSize = 3;
+    //private int fieldWidth; 
+    //private int fieldHeight;
+    
+    private Config config;
     
     private JPanel field[][];
-    
-    
-    /**
-     * Creates new form MainForm
-     */
-    public MainForm() {
-        initComponents();
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -123,27 +117,33 @@ public class MainForm extends javax.swing.JFrame {
         });
     }
     
-    public MainForm(int fieldWidth, int fieldHeight) {
+    /**
+     * Creates new form MainForm
+     */
+    public MainForm() {
         initComponents();
-        this.fieldWidth = fieldWidth;
-        this.fieldHeight = fieldHeight;
-        this.fieldsPanel.setLayout(new GridLayout(fieldWidth, fieldHeight, 0, 0));
+        config = Config.getInstance();
+        //this.fieldWidth = fieldWidth;
+        //this.fieldHeight = fieldHeight;
+        this.fieldsPanel.setLayout(new GridLayout(config.getSizeX(), config.getSizeY(), 0, 0));
         initField();
         this.pack();
     }
     
     private void initField(){
-        field = new JPanel[fieldWidth][fieldHeight];
+        field = new JPanel[config.getSizeX()][config.getSizeY()];
         
-        for(int i = 0; i<fieldWidth; i++){
-            for(int j = 0; j<fieldHeight; j++){
+        for(int i = 0; i<config.getSizeX(); i++){
+            for(int j = 0; j<config.getSizeY(); j++){
                 JPanel theField = field[i][j];
                 theField = new JPanel();
                 this.fieldsPanel.add(theField);
                 theField.setPreferredSize(new Dimension(elementSize, elementSize));
-                theField.setBorder(new LineBorder(Color.black, 1));
+                //theField.setBorder(new LineBorder(Color.black, 1));
                 if((i+j)%2 == 0){
-                    theField.setBackground(Color.red);
+                    theField.setBackground(config.getColor1());
+                }else{
+                    theField.setBackground(config.getColor2());
                 }
             }
         }

@@ -14,9 +14,9 @@ public class SuperKitty {
     /**
      * @param args the command line arguments
      */
-    private static MainForm mf = new MainForm(20,30);
+    private static MainForm mf = new MainForm();
     
-    public static void main(String[] args) {
+    public static void main(String[] args) {      
         mf.setVisible(true);
     }
     
