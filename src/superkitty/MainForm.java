@@ -139,7 +139,6 @@ public class MainForm extends javax.swing.JFrame {
                 theField = new JPanel();
                 this.fieldsPanel.add(theField);
                 theField.setPreferredSize(new Dimension(elementSize, elementSize));
-                //theField.setBorder(new LineBorder(Color.black, 1));
                 if((i+j)%2 == 0){
                     theField.setBackground(config.getColor1());
                 }else{

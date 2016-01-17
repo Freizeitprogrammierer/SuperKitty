@@ -18,31 +18,56 @@ import java.util.Properties;
 /**
  *
  * @author Tobias
+ * 
+ * Nach Singleton-Designpattern. Es gibt also keinen öffentlichen Constructor.
+ * Auf die Klasse wird mit getInstance() zugegriffen.
  */
 public class Config {
-    public static final String PROP_SIZEX = "PROP_SIZEX";
+    // Für PropertyChangeSupport
+    public static final String PROP_SIZEX = "PROP_SIZEX";       
     public static final String PROP_SIZEY = "PROP_SIZEY";
     public static final String PROP_COLOR1 = "PROP_COLOR1";
     public static final String PROP_COLOR2 = "PROP_COLOR2";
+    
+    // Hier werden die Properties gespeichert
     Properties props = new Properties();
     
+    // Spielfeldgröße in x-Richtung und y-Richtung
     private int sizeX = 20;
     private int sizeY = 20;
+    // Farbe für lebende und tote Zellen
     private Color color1 = Color.BLACK;
     private Color color2 = Color.WHITE;
+    // ProperyChangeSupport, damit andere Komponenten Änderungen mitbekommen.
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
     
+    // Singleton-Objekt
     private static Config config = new Config();
     
+    /**
+     * Gibt das Config-Objekt zurück. Hierüber wird verhindert, dass mehrere 
+     * Config-Objekte gleichzeitig existieren.
+     * @return Singleton-Objekt
+     */
     public static Config getInstance(){
         return config;
     }
     
+    /**
+     * Construktor auf private gesetzt, damit keine zusätzlichen Config-Objekte
+     * erzeugt werden können.
+     */
     private Config(){
         readConfig();
     }
     
-    
+    /**
+     * Lesen der Konfiguration aus der Datei "config.txt" im Projektordner. 
+     * Falls mit der Datei etwas nicht stimmt (falsch formatiert, nicht 
+     * vorhanden oder sonst nicht lesbar), wird false zurück gegeben, ansonsten 
+     * true. Wird beim erzeugen aufgerufen.
+     * @return 
+     */
     public final boolean readConfig(){        
         InputStream input = null;
         
@@ -72,6 +97,12 @@ public class Config {
         }
     }  
     
+    /**
+     * Schreiben der Konfiguration in die Datei "config.txt" im Projektordner. 
+     * Falls die Datei nicht geschrieben werden kann, wird false zurück gegeben,
+     * ansonsten true.
+     * @return 
+     */
     public boolean writeConfig(){
         OutputStream output = null;
         try{
@@ -129,14 +160,19 @@ public class Config {
         this.sizeY = sizeY;
         propertyChangeSupport.firePropertyChange(PROP_SIZEY, oldSizeY, sizeY);
     }
-
+    
+    /**
+     * Überprüft, ob die Feldgröße gültig ist (10...50).
+     * @param newSize
+     * @return 
+     */
     private boolean checkFieldSize(int newSize) {
         if (newSize < 10) {
             System.err.println("Feldgröße muss mindestens 10x10 sein");
             return false;
         }
-        if (newSize > 500) {
-            System.err.println("Feldgröße darf maximal 500x500 sein");
+        if (newSize > 50) {
+            System.err.println("Feldgröße darf maximal 50x50 sein");
             return false;
         }
         return true;
