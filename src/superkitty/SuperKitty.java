@@ -14,10 +14,10 @@ public class SuperKitty {
     /**
      * @param args the command line arguments
      */
-    private static MainForm mf = new MainForm();
+    //private static MainForm mf = new MainForm();
     
     public static void main(String[] args) {      
-        mf.setVisible(true);
+        MainForm.getInstance().setVisible(true);
     }
     
 }
