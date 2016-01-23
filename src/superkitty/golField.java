@@ -5,6 +5,10 @@
  */
 package superkitty;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Tobias
@@ -17,6 +21,8 @@ public class golField {
     
     private static golField theField = new golField(50, 50);
     
+    private List<example> examples = new ArrayList<>();
+    
     public static golField getInstance(){
         return theField;
     }
@@ -27,6 +33,7 @@ public class golField {
         
         field = new boolean[sizeX][sizeY];
         nextGen = new boolean[sizeX][sizeY];
+        loadExamples();
     }
     
     public void clearField(){
@@ -172,11 +179,14 @@ public class golField {
      */
     public void exampleGleiter(){
         clearField();
-        setField(2, 1, true);
-        setField(3, 2, true);
-        setField(1, 3, true);
-        setField(2, 3, true);
-        setField(3, 3, true);
+        example e = getExamples().get(0);
+        int xOffs = (sizeX - e.getSizeX())/2;
+        int yOffs = (sizeY - e.getSizeY())/2;
+        for(int x = 0; x<e.getSizeX(); x++){
+            for(int y = 0; y<e.getSizeY(); y++){
+                field[xOffs + x][yOffs + y] = e.getField(x, y);
+            }
+        }
         
     }
     
@@ -198,7 +208,45 @@ public class golField {
         setField(3, 5, true);
         setField(4, 1, true);
         setField(4, 4, true);
+    }
+    
+    private void loadExamples(){
+        File folder = new File("bsp/");
+        for(int i = 0; i < folder.list().length; i++){
+            if(folder.listFiles()[i].isFile()){
+                example e = new example();
+                e.loadFromFile(folder.getPath() + "\\" + folder.list()[i]);
+                getExamples().add(e);
+            }
+        }
+    }
+    
+    public void getExample(String name){
+        example e = null;
         
+        for (example example : getExamples()) {
+            e = example;
+            if(name.equals(e.getName())){
+                break;
+            }
+        }
+        if(!(e == null)){
+            clearField();
+            int xOffs = (sizeX - e.getSizeX())/2;
+            int yOffs = (sizeY - e.getSizeY())/2;
+            for(int x = 0; x<e.getSizeX(); x++){
+                for(int y = 0; y<e.getSizeY(); y++){
+                    field[xOffs + x][yOffs + y] = e.getField(x, y);
+                }
+            }
+        }
+    }
+
+    /**
+     * @return the examples
+     */
+    public List<example> getExamples() {
+        return examples;
     }
     
 }

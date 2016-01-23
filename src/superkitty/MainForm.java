@@ -8,6 +8,7 @@ package superkitty;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Timer;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 /**
@@ -48,8 +49,6 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -109,23 +108,6 @@ public class MainForm extends javax.swing.JFrame {
                 jMenu2ActionPerformed(evt);
             }
         });
-
-        jMenuItem4.setText("Gleiter");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem4);
-
-        jMenuItem6.setText("Gleiter LWSS");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem6);
-
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("jMenu3");
@@ -173,24 +155,20 @@ public class MainForm extends javax.swing.JFrame {
         updateField();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        theField.exampleGleiter();
-        updateField();
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         et.toggle();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        theField.exampleSeglerLWSS();
+    private void loadExampleActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        theField.getExample(evt.getActionCommand());
         updateField();
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
+    } 
+    
     public void updateField(){
         for(int x = 0; x < theField.getSizeX(); x++){
             for(int y = 0; y < theField.getSizeY(); y++){
-                field[x][y].setBackground((theField.getField(x, y)?config.getColor1():config.getColor2()));
+                // hier x und y vertauscht, -> Warum??
+                field[y][x].setBackground((theField.getField(x, y)?config.getColor1():config.getColor2()));
             }
         }
     }
@@ -244,6 +222,18 @@ public class MainForm extends javax.swing.JFrame {
         initField();
         this.pack();
         evolveTimer.schedule(et, 1000, 250);
+        
+        for(example e: theField.getExamples()){
+            JMenuItem item = new JMenuItem();
+            item.setText(e.getName());
+            item.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    loadExampleActionPerformed(evt);
+                }
+            });
+            jMenu2.add(item);
+        }
+        
     }
     
     private void initField(){
@@ -276,8 +266,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,0 +1,6 @@
+Segler (Light-Weight Spaceship)
+5x4
+ ****
+*   *
+    *
+*  * 
