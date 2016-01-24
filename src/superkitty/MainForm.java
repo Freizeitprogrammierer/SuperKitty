@@ -22,11 +22,11 @@ public class MainForm extends javax.swing.JFrame {
     //private int fieldHeight;
     
     private Config config;
-    private golField theField;
-    private JPanel field[][];
+    private GoLField theField;
+    private GraphicGoLField panel;
     private Timer evolveTimer = new Timer();
     private static MainForm mf = new MainForm();
-    private evolveTask et = new evolveTask();
+    private EvolveTask et = new EvolveTask();
     
     public static MainForm getInstance(){
         return mf;
@@ -41,7 +41,6 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        fieldsPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -53,17 +52,6 @@ public class MainForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Projekt: Kitty");
-
-        javax.swing.GroupLayout fieldsPanelLayout = new javax.swing.GroupLayout(fieldsPanel);
-        fieldsPanel.setLayout(fieldsPanelLayout);
-        fieldsPanelLayout.setHorizontalGroup(
-            fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
-        );
-        fieldsPanelLayout.setVerticalGroup(
-            fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 303, Short.MAX_VALUE)
-        );
 
         jMenu1.setText("Aktionen");
 
@@ -119,17 +107,11 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fieldsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fieldsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 325, Short.MAX_VALUE)
         );
 
         pack();
@@ -165,12 +147,13 @@ public class MainForm extends javax.swing.JFrame {
     } 
     
     public void updateField(){
-        for(int x = 0; x < theField.getSizeX(); x++){
-            for(int y = 0; y < theField.getSizeY(); y++){
-                // hier x und y vertauscht, -> Warum??
-                field[y][x].setBackground((theField.getField(x, y)?config.getColor1():config.getColor2()));
-            }
-        }
+//        for(int x = 0; x < theField.getSizeX(); x++){
+//            for(int y = 0; y < theField.getSizeY(); y++){
+//                // hier x und y vertauscht, -> Warum??
+//                field[y][x].setBackground((theField.getField(x, y)?config.getColor1():config.getColor2()));
+//            }
+//        }
+        this.repaint();
     }
     
     /**
@@ -215,15 +198,20 @@ public class MainForm extends javax.swing.JFrame {
     private MainForm() {
         initComponents();
         config = Config.getInstance();
-        theField = golField.getInstance();
+        theField = GoLField.getInstance();
         //this.fieldWidth = fieldWidth;
         //this.fieldHeight = fieldHeight;
-        this.fieldsPanel.setLayout(new GridLayout(config.getSizeX(), config.getSizeY(), 0, 0));
-        initField();
+        //this.fieldsPanel.setLayout(new GridLayout(config.getSizeX(), config.getSizeY(), 0, 0));
+        //initField();
+        //this.fieldsPanel.add(new GraphicGoLField());
+        this.setLayout(new GridLayout(1,1));
+        panel = new GraphicGoLField();
+        this.getContentPane().add(panel);
         this.pack();
-        evolveTimer.schedule(et, 1000, 250);
+        this.setSize(panel.getElementSize()*theField.getSizeX()+30, panel.getElementSize()*theField.getSizeY()+80);
+        evolveTimer.schedule(et, 1000, 1000/config.getSpeed());
         
-        for(example e: theField.getExamples()){
+        for(Example e: theField.getExamples()){
             JMenuItem item = new JMenuItem();
             item.setText(e.getName());
             item.addActionListener(new java.awt.event.ActionListener() {
@@ -236,29 +224,8 @@ public class MainForm extends javax.swing.JFrame {
         
     }
     
-    private void initField(){
-        field = new JPanel[config.getSizeX()][config.getSizeY()];
-        
-        for(int i = 0; i<config.getSizeX(); i++){
-            for(int j = 0; j<config.getSizeY(); j++){
-                JPanel theField = field[i][j];
-                theField = new JPanel();
-                this.fieldsPanel.add(theField);
-                theField.setPreferredSize(new Dimension(elementSize, elementSize));
-                if((i+j)%2 == 0){
-                    theField.setBackground(config.getColor1());
-                }else{
-                    theField.setBackground(config.getColor2());
-                }
-                field[i][j] = theField;
-            }
-        }
-        
-        
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel fieldsPanel;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Tobias
  */
-public class example {
+public class Example {
     private int sizeX;
     private int sizeY;
     private String name;
@@ -47,7 +47,7 @@ public class example {
             try {
                 reader.close();
             } catch (IOException ex) {
-                Logger.getLogger(example.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Example.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

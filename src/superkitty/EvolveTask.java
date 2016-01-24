@@ -12,13 +12,13 @@ import java.util.TimerTask;
  *
  * @author Tobias
  */
-public class evolveTask extends TimerTask{
+public class EvolveTask extends TimerTask{
     private boolean running = false;
     
     @Override
     public void run() {
         if(running){
-            golField.getInstance().calculateNextGeneration();
+            GoLField.getInstance().calculateNextGeneration();
             MainForm.getInstance().updateField();
         }
     }

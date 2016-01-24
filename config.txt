@@ -1,5 +1,6 @@
 #Sun Jan 17 16:22:51 CET 2016
 color2=-1
-sizeX=50
+sizeX=200
 color1=-16777216
-sizeY=50
+sizeY=150
+speed=10

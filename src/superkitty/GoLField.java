@@ -13,23 +13,24 @@ import java.util.List;
  *
  * @author Tobias
  */
-public class golField {
+public class GoLField {
     private int sizeX;
     private int sizeY;
     private boolean[][] field;
     private boolean[][] nextGen;
+    Config config = Config.getInstance();
     
-    private static golField theField = new golField(50, 50);
+    private static GoLField theField = new GoLField();
     
-    private List<example> examples = new ArrayList<>();
+    private List<Example> examples = new ArrayList<>();
     
-    public static golField getInstance(){
+    public static GoLField getInstance(){
         return theField;
     }
     
-    private golField(int sizeX, int sizeY){
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
+    private GoLField(){
+        this.sizeX = config.getSizeX();
+        this.sizeY = config.getSizeY();
         
         field = new boolean[sizeX][sizeY];
         nextGen = new boolean[sizeX][sizeY];
@@ -38,7 +39,7 @@ public class golField {
     
     public void clearField(){
         for(int x = 0; x < getSizeX(); x++){
-            for(int y = 0; y < getSizeX(); y++){
+            for(int y = 0; y < getSizeY(); y++){
                 setField(x, y, false);
             }
         }
@@ -46,7 +47,7 @@ public class golField {
     
     public void clearNextGen(){
         for(int x = 0; x < getSizeX(); x++){
-            for(int y = 0; y < getSizeX(); y++){
+            for(int y = 0; y < getSizeY(); y++){
                 setNextGen(x, y, false);
             }
         }
@@ -54,15 +55,15 @@ public class golField {
     
     public void createRandomStartField(){
         for(int x = 0; x < getSizeX(); x++){
-            for(int y = 0; y < getSizeX(); y++){
-                setField(x, y, (Math.random()<.5));
+            for(int y = 0; y < getSizeY(); y++){
+                setField(x, y, (Math.random()<.3));
             }
         }
     }
     
     public void evolve(){
         for(int x = 0; x < getSizeX(); x++){
-            for(int y = 0; y < getSizeX(); y++){
+            for(int y = 0; y < getSizeY(); y++){
                 setField(x, y, getNextGen(x, y));
             }
         }
@@ -71,7 +72,7 @@ public class golField {
     public void calculateNextGeneration(){
         clearNextGen();
         for(int x = 0; x < getSizeX(); x++){
-            for(int y = 0; y < getSizeX(); y++){
+            for(int y = 0; y < getSizeY(); y++){
                 boolean theCell = getField(x, y);
                 int n = countNeighbours(x, y);
                 if((!theCell) && (n==3)){
@@ -121,6 +122,9 @@ public class golField {
      */
     public void setSizeX(int sizeX) {
         this.sizeX = sizeX;
+        
+        field = new boolean[sizeX][sizeY];
+        nextGen = new boolean[sizeX][sizeY];
     }
 
     /**
@@ -135,6 +139,9 @@ public class golField {
      */
     public void setSizeY(int sizeY) {
         this.sizeY = sizeY;
+        
+        field = new boolean[sizeX][sizeY];
+        nextGen = new boolean[sizeX][sizeY];
     }
 
     /**
@@ -179,7 +186,7 @@ public class golField {
      */
     public void exampleGleiter(){
         clearField();
-        example e = getExamples().get(0);
+        Example e = getExamples().get(0);
         int xOffs = (sizeX - e.getSizeX())/2;
         int yOffs = (sizeY - e.getSizeY())/2;
         for(int x = 0; x<e.getSizeX(); x++){
@@ -214,7 +221,7 @@ public class golField {
         File folder = new File("bsp/");
         for(int i = 0; i < folder.list().length; i++){
             if(folder.listFiles()[i].isFile()){
-                example e = new example();
+                Example e = new Example();
                 e.loadFromFile(folder.getPath() + "\\" + folder.list()[i]);
                 getExamples().add(e);
             }
@@ -222,9 +229,9 @@ public class golField {
     }
     
     public void getExample(String name){
-        example e = null;
+        Example e = null;
         
-        for (example example : getExamples()) {
+        for (Example example : getExamples()) {
             e = example;
             if(name.equals(e.getName())){
                 break;
@@ -245,7 +252,7 @@ public class golField {
     /**
      * @return the examples
      */
-    public List<example> getExamples() {
+    public List<Example> getExamples() {
         return examples;
     }
     

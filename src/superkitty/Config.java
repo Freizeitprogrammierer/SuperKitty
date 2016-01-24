@@ -28,6 +28,7 @@ public class Config {
     public static final String PROP_SIZEY = "PROP_SIZEY";
     public static final String PROP_COLOR1 = "PROP_COLOR1";
     public static final String PROP_COLOR2 = "PROP_COLOR2";
+    public static final String PROP_SPEED = "PROP_SPEED";
     
     // Hier werden die Properties gespeichert
     Properties props = new Properties();
@@ -39,6 +40,7 @@ public class Config {
     private Color color1 = Color.BLACK;
     private Color color2 = Color.WHITE;
     // ProperyChangeSupport, damit andere Komponenten Änderungen mitbekommen.
+    private int speed = 2;
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
     
     // Singleton-Objekt
@@ -80,6 +82,7 @@ public class Config {
             setSizeY(Integer.parseInt(props.getProperty("sizeY", "20")));
             setColor1(Color.decode(props.getProperty("color1", "#000000")));
             setColor2(Color.decode(props.getProperty("color2", "#FFFFFF")));
+            setSpeed(Integer.parseInt(props.getProperty("speed", "2")));
             
             return true;
         }catch(FileNotFoundException E){
@@ -112,6 +115,7 @@ public class Config {
             props.setProperty("sizeY", String.valueOf(getSizeY()));
             props.setProperty("color1", String.valueOf(getColor1().getRGB()));
             props.setProperty("color2", String.valueOf(getColor2().getRGB()));
+            props.setProperty("speed", String.valueOf(getSpeed()));
             
             props.store(output, null);
             return true;
@@ -171,8 +175,8 @@ public class Config {
             System.err.println("Feldgröße muss mindestens 10x10 sein");
             return false;
         }
-        if (newSize > 50) {
-            System.err.println("Feldgröße darf maximal 50x50 sein");
+        if (newSize > 200) {
+            System.err.println("Feldgröße darf maximal 200x200 sein");
             return false;
         }
         return true;
@@ -208,6 +212,22 @@ public class Config {
         java.awt.Color oldColor2 = this.color2;
         this.color2 = color2;
         propertyChangeSupport.firePropertyChange(PROP_COLOR2, oldColor2, color2);
+    }
+
+    /**
+     * @return the speed
+     */
+    public int getSpeed() {
+        return speed;
+    }
+
+    /**
+     * @param speed the speed to set
+     */
+    public void setSpeed(int speed) {
+        int oldSpeed = this.speed;
+        this.speed = speed;
+        propertyChangeSupport.firePropertyChange(PROP_SPEED, oldSpeed, speed);
     }
     
 }
