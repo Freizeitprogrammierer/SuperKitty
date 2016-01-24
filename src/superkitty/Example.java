@@ -30,7 +30,7 @@ public class Example {
             reader = new BufferedReader(new FileReader(file));
             name = reader.readLine();
             String size = reader.readLine();
-            int pos = size.indexOf("x");
+            int pos = size.indexOf("x"); 
             sizeX = Integer.parseInt(size.substring(0, pos));
             sizeY = Integer.parseInt(size.substring(pos+1));
             

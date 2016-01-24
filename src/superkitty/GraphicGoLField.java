@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  */
 public class GraphicGoLField extends JPanel{
     public static final String PROP_ELEMENTSIZE = "PROP_ELEMENTSIZE";
-    private GoLField field = GoLField.getInstance();
+    private GoLField field = GoLField.getInstance(); 
     private Config config = Config.getInstance();
     private int elementSize = 5;
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);

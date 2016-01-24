@@ -19,7 +19,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private final int elementSize = 3;
     //private int fieldWidth; 
-    //private int fieldHeight;
+    //private int fieldHeight; 
     
     private Config config;
     private GoLField theField;
