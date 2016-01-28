@@ -18,6 +18,7 @@ public class GoLField {
     private int sizeY;
     private boolean[][] field;
     private boolean[][] nextGen;
+    private int generation = 0;
     Config config = Config.getInstance();
     
     private static GoLField theField = new GoLField();
@@ -43,6 +44,7 @@ public class GoLField {
                 setField(x, y, false);
             }
         }
+        generation = 0;
     }
     
     public void clearNextGen(){
@@ -59,6 +61,7 @@ public class GoLField {
                 setField(x, y, (Math.random()<.3));
             }
         }
+        generation = 0;
     }
     
     public void evolve(){
@@ -67,6 +70,7 @@ public class GoLField {
                 setField(x, y, getNextGen(x, y));
             }
         }
+        generation ++;
     }
     
     public void calculateNextGeneration(){
@@ -254,6 +258,13 @@ public class GoLField {
      */
     public List<Example> getExamples() {
         return examples;
+    }
+
+    /**
+     * @return the generation
+     */
+    public int getGeneration() {
+        return generation;
     }
     
 }

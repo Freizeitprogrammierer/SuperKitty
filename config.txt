@@ -1,6 +1,6 @@
-#Sun Jan 17 16:22:51 CET 2016
+#Thu Jan 28 17:46:04 CET 2016
+sizeX=125
 color2=-1
-sizeX=200
 color1=-16777216
-sizeY=150
-speed=10
+speed=20
+sizeY=125

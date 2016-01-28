@@ -26,6 +26,7 @@ public class MainForm extends javax.swing.JFrame {
     private GraphicGoLField panel;
     private Timer evolveTimer = new Timer();
     private static MainForm mf = new MainForm();
+    private static OptionsForm of = OptionsForm.getInstance();
     private EvolveTask et = new EvolveTask();
     
     public static MainForm getInstance(){
@@ -49,6 +50,8 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMGeneration = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Projekt: Kitty");
@@ -98,8 +101,23 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("jMenu3");
+        jMenu3.setText("Optionen");
+
+        jMenuItem4.setText("Optionen");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
         jMenuBar1.add(jMenu3);
+
+        jMGeneration.setText("Generation: 0");
+        jMGeneration.setBorderPainted(true);
+        jMGeneration.setDoubleBuffered(true);
+        jMGeneration.setFocusable(false);
+        jMenuBar1.add(jMGeneration);
 
         setJMenuBar(jMenuBar1);
 
@@ -140,6 +158,11 @@ public class MainForm extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         et.toggle();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        of.setVisible(true);
+        of.initValues();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void loadExampleActionPerformed(java.awt.event.ActionEvent evt) {                                           
         theField.getExample(evt.getActionCommand());
@@ -199,11 +222,6 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         config = Config.getInstance();
         theField = GoLField.getInstance();
-        //this.fieldWidth = fieldWidth;
-        //this.fieldHeight = fieldHeight;
-        //this.fieldsPanel.setLayout(new GridLayout(config.getSizeX(), config.getSizeY(), 0, 0));
-        //initField();
-        //this.fieldsPanel.add(new GraphicGoLField());
         this.setLayout(new GridLayout(1,1));
         panel = new GraphicGoLField();
         this.getContentPane().add(panel);
@@ -226,6 +244,7 @@ public class MainForm extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JMenu jMGeneration;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -233,6 +252,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     // End of variables declaration//GEN-END:variables
 }

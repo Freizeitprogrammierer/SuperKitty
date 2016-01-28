@@ -20,6 +20,7 @@ public class EvolveTask extends TimerTask{
         if(running){
             GoLField.getInstance().calculateNextGeneration();
             MainForm.getInstance().updateField();
+            MainForm.getInstance().jMGeneration.setText("Generation: " + String.valueOf(GoLField.getInstance().getGeneration()));
         }
     }
     
