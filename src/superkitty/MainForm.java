@@ -5,32 +5,29 @@
  */
 package superkitty;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Timer;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 
 /**
  *
  * @author Tobias
  */
 public class MainForm extends javax.swing.JFrame {
-
-    private final int elementSize = 3;
-    //private int fieldWidth; 
-    //private int fieldHeight; 
-    
     private Config config;
-    private GoLField theField;
-    private GraphicGoLField panel;
+    private static AbstractGoLField theField;
+    private final GraphicGoLField panel;
     private Timer evolveTimer = new Timer();
-    private static MainForm mf = new MainForm();
-    private static OptionsForm of = OptionsForm.getInstance();
-    private EvolveTask et = new EvolveTask();
+    private static final MainForm mf = new MainForm();
+    private static final OptionsForm of = OptionsForm.getInstance();
+    private EvolveTask et = null;
     
     public static MainForm getInstance(){
         return mf;
+    }
+    
+    public AbstractGoLField getField(){
+        return theField;
     }
 
     /**
@@ -156,6 +153,10 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        if(et == null){
+            et = new EvolveTask();
+            evolveTimer.schedule(et, 1000, 1000/config.getSpeed());
+        }
         et.toggle();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -170,12 +171,6 @@ public class MainForm extends javax.swing.JFrame {
     } 
     
     public void updateField(){
-//        for(int x = 0; x < theField.getSizeX(); x++){
-//            for(int y = 0; y < theField.getSizeY(); y++){
-//                // hier x und y vertauscht, -> Warum??
-//                field[y][x].setBackground((theField.getField(x, y)?config.getColor1():config.getColor2()));
-//            }
-//        }
         this.repaint();
     }
     
@@ -221,14 +216,27 @@ public class MainForm extends javax.swing.JFrame {
     private MainForm() {
         initComponents();
         config = Config.getInstance();
-        theField = GoLField.getInstance();
+        switch(config.getRules()){
+            case 1: 
+                theField = new CopyGoLField();
+                break;
+            case 2: 
+                theField = new ExplodingGoLField();
+                break;
+            case 3: 
+                theField = new LabyrinthGoLField();
+                break;
+            case 0:
+            default: 
+                theField = new StandardGoLField();
+                break;
+        }
         this.setLayout(new GridLayout(1,1));
-        panel = new GraphicGoLField();
+        panel = new GraphicGoLField(theField);
         this.getContentPane().add(panel);
         this.pack();
         this.setSize(panel.getElementSize()*theField.getSizeX()+30, panel.getElementSize()*theField.getSizeY()+80);
-        evolveTimer.schedule(et, 1000, 1000/config.getSpeed());
-        
+
         for(Example e: theField.getExamples()){
             JMenuItem item = new JMenuItem();
             item.setText(e.getName());

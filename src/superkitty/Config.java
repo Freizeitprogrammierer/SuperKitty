@@ -29,6 +29,7 @@ public class Config {
     public static final String PROP_COLOR1 = "PROP_COLOR1";
     public static final String PROP_COLOR2 = "PROP_COLOR2";
     public static final String PROP_SPEED = "PROP_SPEED";
+    public static final String PROP_RULES = "PROP_RULES";
     
     // Hier werden die Properties gespeichert
     Properties props = new Properties();
@@ -39,8 +40,11 @@ public class Config {
     // Farbe für lebende und tote Zellen
     private Color color1 = Color.BLACK;
     private Color color2 = Color.WHITE;
-    // ProperyChangeSupport, damit andere Komponenten Änderungen mitbekommen.
+    // Änderungsgeschwindigkeit
     private int speed = 2;
+    // Regelwerk
+    private int rules = 0;
+    // ProperyChangeSupport, damit andere Komponenten Änderungen mitbekommen.
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
     
     // Singleton-Objekt
@@ -83,6 +87,7 @@ public class Config {
             setColor1(Color.decode(props.getProperty("color1", "#000000")));
             setColor2(Color.decode(props.getProperty("color2", "#FFFFFF")));
             setSpeed(Integer.parseInt(props.getProperty("speed", "2")));
+            setRules(Integer.parseInt(props.getProperty("rules", "0")));
             
             return true;
         }catch(FileNotFoundException E){
@@ -116,6 +121,7 @@ public class Config {
             props.setProperty("color1", String.valueOf(getColor1().getRGB()));
             props.setProperty("color2", String.valueOf(getColor2().getRGB()));
             props.setProperty("speed", String.valueOf(getSpeed()));
+            props.setProperty("rules", String.valueOf(getRules()));
             
             props.store(output, null);
             return true;
@@ -228,6 +234,22 @@ public class Config {
         int oldSpeed = this.speed;
         this.speed = speed;
         propertyChangeSupport.firePropertyChange(PROP_SPEED, oldSpeed, speed);
+    }
+
+    /**
+     * @return the rules
+     */
+    public int getRules() {
+        return rules;
+    }
+
+    /**
+     * @param rules the rules to set
+     */
+    public void setRules(int rules) {
+        int oldRules = this.rules;
+        this.rules = rules;
+        propertyChangeSupport.firePropertyChange(PROP_RULES, oldRules, rules);
     }
     
 }

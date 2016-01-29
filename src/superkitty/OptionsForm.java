@@ -36,6 +36,7 @@ public class OptionsForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgRegelwerk = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSpSizeX = new javax.swing.JSpinner();
@@ -46,6 +47,11 @@ public class OptionsForm extends javax.swing.JFrame {
         jSpSpeed = new javax.swing.JSpinner();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        rbStd = new javax.swing.JRadioButton();
+        rbKop = new javax.swing.JRadioButton();
+        rbLab = new javax.swing.JRadioButton();
+        rbExp = new javax.swing.JRadioButton();
 
         setTitle("Projekt: Kitty - Optionen");
 
@@ -107,7 +113,7 @@ public class OptionsForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jSpSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(jSpSpeed)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -135,6 +141,46 @@ public class OptionsForm extends javax.swing.JFrame {
             }
         });
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Regelwerk"));
+
+        bgRegelwerk.add(rbStd);
+        rbStd.setText("Standard");
+
+        bgRegelwerk.add(rbKop);
+        rbKop.setText("Kopierend");
+
+        bgRegelwerk.add(rbLab);
+        rbLab.setText("Labyrindartig");
+
+        bgRegelwerk.add(rbExp);
+        rbExp.setText("Explodierend");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbStd)
+                    .addComponent(rbKop)
+                    .addComponent(rbExp)
+                    .addComponent(rbLab))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(rbStd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbKop)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbExp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbLab)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,15 +188,15 @@ public class OptionsForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,11 +205,13 @@ public class OptionsForm extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addContainerGap())
         );
 
         pack();
@@ -173,6 +221,12 @@ public class OptionsForm extends javax.swing.JFrame {
         config.setSizeX((int)jSpSizeX.getValue());
         config.setSizeY((int)jSpSizeY.getValue());
         config.setSpeed((int)jSpSpeed.getValue());
+        
+        if(rbStd.isSelected()) config.setRules(0);
+        if(rbKop.isSelected()) config.setRules(1);
+        if(rbExp.isSelected()) config.setRules(2);
+        if(rbLab.isSelected()) config.setRules(3);
+        
         config.writeConfig();
         setVisible(false);
         JOptionPane.showMessageDialog(null, "Damit die Änderungen übernommen werden, muss das Spiel neu gestartet werden." , 
@@ -223,9 +277,24 @@ public class OptionsForm extends javax.swing.JFrame {
         jSpSizeX.setValue(config.getSizeX());
         jSpSizeY.setValue(config.getSizeY());
         jSpSpeed.setValue(config.getSpeed());
+        switch(config.getRules()){
+            case 0:
+                rbStd.setSelected(true);
+                break;
+            case 1:
+                rbKop.setSelected(true);
+                break;
+            case 2:
+                rbExp.setSelected(true);
+                break;
+            case 3:
+                rbLab.setSelected(true);
+                break;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgRegelwerk;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -233,8 +302,13 @@ public class OptionsForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JSpinner jSpSizeX;
     private javax.swing.JSpinner jSpSizeY;
     private javax.swing.JSpinner jSpSpeed;
+    private javax.swing.JRadioButton rbExp;
+    private javax.swing.JRadioButton rbKop;
+    private javax.swing.JRadioButton rbLab;
+    private javax.swing.JRadioButton rbStd;
     // End of variables declaration//GEN-END:variables
 }

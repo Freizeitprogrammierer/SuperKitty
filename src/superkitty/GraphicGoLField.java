@@ -15,11 +15,15 @@ import javax.swing.JPanel;
  */
 public class GraphicGoLField extends JPanel{
     public static final String PROP_ELEMENTSIZE = "PROP_ELEMENTSIZE";
-    private GoLField field = GoLField.getInstance(); 
-    private Config config = Config.getInstance();
+    private AbstractGoLField field = null;
+    private final Config config = Config.getInstance();
     private int elementSize = 5;
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
     
+    public GraphicGoLField(AbstractGoLField field){
+        super();
+        this.field = field;
+    }
     
     @Override
     protected void paintComponent(Graphics g){

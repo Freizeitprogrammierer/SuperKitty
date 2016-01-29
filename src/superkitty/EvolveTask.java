@@ -14,13 +14,20 @@ import java.util.TimerTask;
  */
 public class EvolveTask extends TimerTask{
     private boolean running = false;
+    private final MainForm mf = MainForm.getInstance();
+    private final AbstractGoLField field;
+    
+    public EvolveTask(){
+        super();
+        field = mf.getField();
+    }
     
     @Override
     public void run() {
         if(running){
-            GoLField.getInstance().calculateNextGeneration();
-            MainForm.getInstance().updateField();
-            MainForm.getInstance().jMGeneration.setText("Generation: " + String.valueOf(GoLField.getInstance().getGeneration()));
+            field.calculateNextGeneration();
+            mf.updateField();
+            mf.jMGeneration.setText("Generation: " + String.valueOf(field.getGeneration()));
         }
     }
     

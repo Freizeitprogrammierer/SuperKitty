@@ -13,38 +13,24 @@ import java.util.List;
  *
  * @author Tobias
  */
-public class GoLField {
-    private int sizeX;
-    private int sizeY;
-    private boolean[][] field;
-    private boolean[][] nextGen;
-    private int generation = 0;
-    Config config = Config.getInstance();
+public abstract class AbstractGoLField {
+    protected int sizeX;
+    protected int sizeY;
+    protected boolean[][] field;
+    protected boolean[][] nextGen;
+    protected int generation = 0;
+    protected Config config = Config.getInstance();
+    protected List<Example> examples = new ArrayList<>();
     
-    private static GoLField theField = new GoLField();
+    public abstract void calculateNextGeneration();
     
-    private List<Example> examples = new ArrayList<>();
-    
-    public static GoLField getInstance(){
-        return theField;
-    }
-    
-    private GoLField(){
+    public AbstractGoLField(){
         this.sizeX = config.getSizeX();
         this.sizeY = config.getSizeY();
         
         field = new boolean[sizeX][sizeY];
         nextGen = new boolean[sizeX][sizeY];
         loadExamples();
-    }
-    
-    public void clearField(){
-        for(int x = 0; x < getSizeX(); x++){
-            for(int y = 0; y < getSizeY(); y++){
-                setField(x, y, false);
-            }
-        }
-        generation = 0;
     }
     
     public void clearNextGen(){
@@ -73,47 +59,6 @@ public class GoLField {
         generation ++;
     }
     
-    public void calculateNextGeneration(){
-        clearNextGen();
-        for(int x = 0; x < getSizeX(); x++){
-            for(int y = 0; y < getSizeY(); y++){
-                boolean theCell = getField(x, y);
-                int n = countNeighbours(x, y);
-                if((!theCell) && (n==3)){
-                    setNextGen(x, y, true);
-                    continue;
-                }
-                if(theCell && (n<2)){
-                    setNextGen(x, y, false);
-                    continue;
-                }
-                if(theCell && ((n==2)||(n==3))){
-                    setNextGen(x, y, true);
-                    continue;
-                }
-                if(theCell && (n>3)){
-                    setNextGen(x, y, false);
-                    continue;
-                }
-            }
-        }
-        evolve();
-    }
-    
-    
-    
-    private int countNeighbours(int x, int y){
-        int n = 0;
-        for (int i = x - 1; i <= x + 1; i++) {
-            for (int j = y - 1; j <= y + 1; j++) {
-                if(!((i==x)&&(j==y))){ // sich selbst nicht mitzählen
-                    n += (getField(i, j)?1:0);
-                }
-            }
-        }
-        return n;
-    }
-
     /**
      * @return the sizeX
      */
@@ -180,48 +125,7 @@ public class GoLField {
         this.nextGen[x][y] = value;
     }
     
-    // Beispiele
-    
-    /**
-     * Gleiter
-     *       *
-     *        *
-     *      ***
-     */
-    public void exampleGleiter(){
-        clearField();
-        Example e = getExamples().get(0);
-        int xOffs = (sizeX - e.getSizeX())/2;
-        int yOffs = (sizeY - e.getSizeY())/2;
-        for(int x = 0; x<e.getSizeX(); x++){
-            for(int y = 0; y<e.getSizeY(); y++){
-                field[xOffs + x][yOffs + y] = e.getField(x, y);
-            }
-        }
-        
-    }
-    
-    /**
-     * Segler LWSS
-     *       ****   
-     *      *   *
-     *          *
-     *      *  *
-     */
-    public void exampleSeglerLWSS(){
-        clearField();
-        setField(1, 2, true);
-        setField(1, 3, true);
-        setField(1, 4, true);
-        setField(1, 5, true);
-        setField(2, 1, true);
-        setField(2, 5, true);
-        setField(3, 5, true);
-        setField(4, 1, true);
-        setField(4, 4, true);
-    }
-    
-    private void loadExamples(){
+    protected final void loadExamples(){
         File folder = new File("bsp/");
         for(int i = 0; i < folder.list().length; i++){
             if(folder.listFiles()[i].isFile()){
@@ -252,6 +156,15 @@ public class GoLField {
             }
         }
     }
+    
+    public void clearField(){
+        for(int x = 0; x < getSizeX(); x++){
+            for(int y = 0; y < getSizeY(); y++){
+                setField(x, y, false);
+            }
+        }
+        generation = 0;
+    }
 
     /**
      * @return the examples
@@ -266,5 +179,4 @@ public class GoLField {
     public int getGeneration() {
         return generation;
     }
-    
 }
