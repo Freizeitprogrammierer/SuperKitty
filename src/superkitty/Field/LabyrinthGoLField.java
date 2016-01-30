@@ -1,22 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package superkitty;
+package superkitty.Field;
 
 /**
- *
+ * Erzeugt eine sich ausbreitende, labyrinthartige Welt.
+ * Regelbezeichnung: 12345/3
+ * 
+ * Weitere Informationen siehe:
+ * https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens#Abweichende_Regeln
+ * 
  * @author Tobias
  */
 public class LabyrinthGoLField extends AbstractGoLField{  
     @Override
+    /**
+     * Nächste Generation berechnen.
+     */
     public void calculateNextGeneration(){
+        // nächste Generation zurücksetzen
         clearNextGen();
         for(int x = 0; x < getSizeX(); x++){
             for(int y = 0; y < getSizeY(); y++){
+                // ermitteln, ob aktuelle Zelle lebt
                 boolean theCell = getField(x, y);
+                // Nachbarzellen zählen
                 int n = countNeighbours(x, y);
+                // Lebens-/Sterberegeln
                 if((!theCell) && (n==3)){
                     setNextGen(x, y, true);
                 }else if(theCell && ((n==1)||(n==2)||(n==3)||(n==4)||(n==5))){
@@ -27,19 +34,5 @@ public class LabyrinthGoLField extends AbstractGoLField{
             }
         }
         evolve();
-    }
-    
-    
-    private int countNeighbours(int x, int y){
-        int n = 0;
-        for (int i = x - 1; i <= x + 1; i++) {
-            for (int j = y - 1; j <= y + 1; j++) {
-                if(!((i==x)&&(j==y))){ // sich selbst nicht mitzählen
-                    n += (getField(i, j)?1:0);
-                }
-            }
-        }
-        return n;
-    }
-    
+    }    
 }

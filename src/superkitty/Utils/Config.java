@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package superkitty;
+package superkitty.Utils;
 
 import java.awt.Color;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,11 +12,12 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 /**
- *
- * @author Tobias
+ * Konfiguration des Spiels. Wird aus Datei ausgelesen.
  * 
  * Nach Singleton-Designpattern. Es gibt also keinen öffentlichen Constructor.
  * Auf die Klasse wird mit getInstance() zugegriffen.
+ * 
+ * @author Tobias
  */
 public class Config {
     // Für PropertyChangeSupport
@@ -251,5 +248,14 @@ public class Config {
         this.rules = rules;
         propertyChangeSupport.firePropertyChange(PROP_RULES, oldRules, rules);
     }
+    
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener pcl){
+        propertyChangeSupport.addPropertyChangeListener(propertyName, pcl);
+    }
+    
+    public void removePropertyChangeListener(PropertyChangeListener pcl){
+        propertyChangeSupport.removePropertyChangeListener(pcl);
+    }
+    
     
 }

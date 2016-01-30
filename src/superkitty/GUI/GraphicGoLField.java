@@ -3,22 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package superkitty;
+package superkitty.GUI;
 
+import superkitty.Field.AbstractGoLField;
 import java.awt.Graphics;
-import java.beans.PropertyChangeSupport;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
+import superkitty.Utils.Config;
 
 /**
  *
  * @author Tobias
  */
 public class GraphicGoLField extends JPanel{
-    public static final String PROP_ELEMENTSIZE = "PROP_ELEMENTSIZE";
     private AbstractGoLField field = null;
     private final Config config = Config.getInstance();
-    private int elementSize = 5;
-    private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
+    private final int elementSize = 5;
     
     public GraphicGoLField(AbstractGoLField field){
         super();
@@ -34,7 +35,6 @@ public class GraphicGoLField extends JPanel{
                 g.fillRect(i*getElementSize(), j*getElementSize(), getElementSize(), getElementSize());
             }
         }
-        
     }
 
     /**
@@ -45,11 +45,9 @@ public class GraphicGoLField extends JPanel{
     }
 
     /**
-     * @param elementSize the elementSize to set
+     * @param field the field to set
      */
-    public void setElementSize(int elementSize) {
-        int oldElementSize = this.elementSize;
-        this.elementSize = elementSize;
-        propertyChangeSupport.firePropertyChange(PROP_ELEMENTSIZE, oldElementSize, elementSize);
+    public void setField(AbstractGoLField field) {
+        this.field = field;
     }
 }
