@@ -223,19 +223,31 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="rbStd" min="-2" max="-2" attributes="0"/>
-                      <Component id="rbKop" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="rbExp" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="rbLab" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="rbStd" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="lbLink" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="rbKop" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="rbExp" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="rbLab" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="rbStd" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="rbStd" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbLink" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="rbKop" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -269,7 +281,7 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="bgRegelwerk"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Labyrindartig"/>
+            <Property name="text" type="java.lang.String" value="Labyrinthartig"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbExp">
@@ -279,6 +291,21 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Explodierend"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbLink">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="33" red="0" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Wikipedia"/>
+            <Property name="toolTipText" type="java.lang.String" value="https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens#Abweichende_Regeln"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Handcursor"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lbLinkMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

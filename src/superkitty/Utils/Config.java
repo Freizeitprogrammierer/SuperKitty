@@ -45,7 +45,7 @@ public class Config {
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
     
     // Singleton-Objekt
-    private static Config config = new Config();
+    private static final Config config = new Config();
     
     /**
      * Gibt das Config-Objekt zurück. Hierüber wird verhindert, dass mehrere 

@@ -1,5 +1,11 @@
 package superkitty.GUI;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import superkitty.Utils.Config;
 
 /**
@@ -10,8 +16,8 @@ import superkitty.Utils.Config;
 public class OptionsForm extends javax.swing.JFrame {
 
     private final Config config = Config.getInstance();
-    private static MainForm mf = MainForm.getInstance();
-    private static OptionsForm of = new OptionsForm();
+    private static final MainForm mf = MainForm.getInstance();
+    private static final OptionsForm of = new OptionsForm();
     
     public static OptionsForm getInstance(){
         return of;
@@ -48,6 +54,7 @@ public class OptionsForm extends javax.swing.JFrame {
         rbKop = new javax.swing.JRadioButton();
         rbLab = new javax.swing.JRadioButton();
         rbExp = new javax.swing.JRadioButton();
+        lbLink = new javax.swing.JLabel();
 
         setTitle("Projekt: Kitty - Optionen");
 
@@ -146,10 +153,20 @@ public class OptionsForm extends javax.swing.JFrame {
         rbKop.setText("Kopierend");
 
         bgRegelwerk.add(rbLab);
-        rbLab.setText("Labyrindartig");
+        rbLab.setText("Labyrinthartig");
 
         bgRegelwerk.add(rbExp);
         rbExp.setText("Explodierend");
+
+        lbLink.setForeground(new java.awt.Color(0, 51, 255));
+        lbLink.setText("Wikipedia");
+        lbLink.setToolTipText("https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens#Abweichende_Regeln");
+        lbLink.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbLink.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbLinkMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -158,16 +175,24 @@ public class OptionsForm extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rbStd)
-                    .addComponent(rbKop)
-                    .addComponent(rbExp)
-                    .addComponent(rbLab))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(rbStd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbLink))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbKop)
+                            .addComponent(rbExp)
+                            .addComponent(rbLab))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(rbStd)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbStd)
+                    .addComponent(lbLink))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbKop)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -235,6 +260,16 @@ public class OptionsForm extends javax.swing.JFrame {
         initValues();
         setVisible(false);
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void lbLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbLinkMouseClicked
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(new URI(lbLink.getToolTipText()));
+            } catch (IOException | URISyntaxException ex) {
+                Logger.getLogger(OptionsForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_lbLinkMouseClicked
    
     /**
      * Anfangswerte setzen.
@@ -272,6 +307,7 @@ public class OptionsForm extends javax.swing.JFrame {
     private javax.swing.JSpinner jSpSizeX;
     private javax.swing.JSpinner jSpSizeY;
     private javax.swing.JSpinner jSpSpeed;
+    private javax.swing.JLabel lbLink;
     private javax.swing.JRadioButton rbExp;
     private javax.swing.JRadioButton rbKop;
     private javax.swing.JRadioButton rbLab;

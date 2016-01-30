@@ -46,18 +46,27 @@ public class MainForm extends javax.swing.JFrame {
         }
         
         if(evt.getPropertyName().equals("PROP_SPEED")){
-            evolveTimer.cancel();
-            evolveTimer.purge();
-            evolveTimer = new Timer();
-            et = new EvolveTask(theField);
-            evolveTimer.schedule(et, 0, 1000/config.getSpeed());
+            if(evolveTimer!=null){
+                evolveTimer.cancel();
+                evolveTimer.purge();
+                evolveTimer = new Timer();
+                et = new EvolveTask(theField);
+                evolveTimer.schedule(et, 0, 1000/config.getSpeed());
+            }
         }
         
         if(evt.getPropertyName().equals("PROP_RULES")){
             createField();
+            if(et!=null){
+                et.setField(theField);
+            }
             panel.setField(theField);
+            updateField();
         }
-        et.stop();
+        
+        if(et!=null){
+            et.stop();
+        }
     };
     
     // Singleton-Objekt
@@ -182,7 +191,6 @@ public class MainForm extends javax.swing.JFrame {
     private void btnNextGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextGenActionPerformed
         theField.calculateNextGeneration();
         updateField();
-        menuGeneration.setText("Generation: " + String.valueOf(theField.getGeneration()));
     }//GEN-LAST:event_btnNextGenActionPerformed
 
     private void btnAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoActionPerformed
@@ -203,6 +211,7 @@ public class MainForm extends javax.swing.JFrame {
      */
     public final void updateField(){
         this.repaint();
+        menuGeneration.setText("Generation: " + String.valueOf(theField.getGeneration()));
     }
     
     /**
@@ -211,6 +220,9 @@ public class MainForm extends javax.swing.JFrame {
      */
     private void createField(){
         switch(config.getRules()){
+            case 0:
+                theField = new StandardGoLField();
+                break;
             case 1: 
                 theField = new CopyGoLField();
                 break;
@@ -220,7 +232,6 @@ public class MainForm extends javax.swing.JFrame {
             case 3: 
                 theField = new LabyrinthGoLField();
                 break;
-            case 0:
             default: 
                 theField = new StandardGoLField();
                 break;

@@ -7,8 +7,6 @@ package superkitty.GUI;
 
 import superkitty.Field.AbstractGoLField;
 import java.awt.Graphics;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 import superkitty.Utils.Config;
 
