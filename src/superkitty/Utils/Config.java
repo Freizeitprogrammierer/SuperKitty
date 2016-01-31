@@ -169,7 +169,7 @@ public class Config {
     }
     
     /**
-     * Überprüft, ob die Feldgröße gültig ist (10...50).
+     * Überprüft, ob die Feldgröße gültig ist (10...200).
      * @param newSize
      * @return 
      */
@@ -228,6 +228,9 @@ public class Config {
      * @param speed the speed to set
      */
     public void setSpeed(int speed) {
+        if(speed < 1){
+            return;
+        }
         int oldSpeed = this.speed;
         this.speed = speed;
         propertyChangeSupport.firePropertyChange(PROP_SPEED, oldSpeed, speed);

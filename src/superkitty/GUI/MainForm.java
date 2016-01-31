@@ -102,7 +102,7 @@ public class MainForm extends javax.swing.JFrame {
         menuGeneration = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Projekt: Kitty");
+        setTitle("Projekt: SuperKitty");
 
         menuActions.setText("Aktionen");
 

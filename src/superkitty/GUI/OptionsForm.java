@@ -56,7 +56,7 @@ public class OptionsForm extends javax.swing.JFrame {
         rbExp = new javax.swing.JRadioButton();
         lbLink = new javax.swing.JLabel();
 
-        setTitle("Projekt: Kitty - Optionen");
+        setTitle("Projekt: SuperKitty - Optionen");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Spielfeld"));
 
